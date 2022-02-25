@@ -9,6 +9,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.views import APIView
 from rest_framework import status, permissions
 from rest_framework.response import Response
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 
 def home(request):
@@ -27,71 +28,100 @@ def Film_details(request, pk):
     return JsonResponse(serializer.data, safe=False)
 
 
-# Person Api
+# Profile API
 
-class LcProfileAPI(GenericAPIView, ListModelMixin, CreateModelMixin):
+class ProfileListCreate(ListCreateAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
-
-class RudProfileAPI(GenericAPIView, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin):
+class ProfileRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
 
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
-
+# class LcProfileAPI(GenericAPIView, ListModelMixin, CreateModelMixin):
+#     queryset = Profile.objects.all()
+#     serializer_class = ProfileSerializer
+#
+#     def get(self, request, *args, **kwargs):
+#         return self.list(request, *args, **kwargs)
+#
+#     def post(self, request, *args, **kwargs):
+#         return self.create(request, *args, **kwargs)
+#
+#
+# class RudProfileAPI(GenericAPIView, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin):
+#     queryset = Profile.objects.all()
+#     serializer_class = ProfileSerializer
+#
+#     def get(self, request, *args, **kwargs):
+#         return self.retrieve(request, *args, **kwargs)
+#
+#     def put(self, request, *args, **kwargs):
+#         return self.update(request, *args, **kwargs)
+#
+#     def delete(self, request, *args, **kwargs):
+#         return self.destroy(request, *args, **kwargs)
 
 # Film API
 
-class LCFilmApi(GenericAPIView, ListModelMixin, CreateModelMixin):
+class FilmListCreate(ListCreateAPIView):
     queryset = Film.objects.all()
     serializer_class = FilmSerializer
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
-
-class RUDFilmAPI(GenericAPIView, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin):
+class FilmRetrieveUpdateDelete(RetrieveUpdateDestroyAPIView)
     queryset = Film.objects.all()
     serializer_class = FilmSerializer
 
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
 
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
+# class LCFilmApi(GenericAPIView, ListModelMixin, CreateModelMixin):
+#     queryset = Film.objects.all()
+#     serializer_class = FilmSerializer
+#
+#     def get(self, request, *args, **kwargs):
+#         return self.list(request, *args, **kwargs)
+#
+#     def post(self, request, *args, **kwargs):
+#         return self.create(request, *args, **kwargs)
+#
+#
+# class RUDFilmAPI(GenericAPIView, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin):
+#     queryset = Film.objects.all()
+#     serializer_class = FilmSerializer
+#
+#     def get(self, request, *args, **kwargs):
+#         return self.retrieve(request, *args, **kwargs)
+#
+#     def put(self, request, *args, **kwargs):
+#         return self.update(request, *args, **kwargs)
+#
+#     def delete(self, request, *args, **kwargs):
+#         return self.destroy(request, *args, **kwargs)
 
 
 # Cast API
 
-class LcCastAPI(GenericAPIView, ListModelMixin, CreateModelMixin):
+class CastListCreate(ListCreateAPIView):
     queryset = Cast.objects.all()
     serializer_class = CastSerializer
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+class CastRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
+    queryset = Cast.objects.all()
+    serializer_class = CastSerializer
+
+
+# class LcCastAPI(GenericAPIView, ListModelMixin, CreateModelMixin):
+#     queryset = Cast.objects.all()
+#     serializer_class = CastSerializer
+#
+#     def get(self, request, *args, **kwargs):
+#         return self.list(request, *args, **kwargs)
+#
+#     def post(self, request, *args, **kwargs):
+#         return self.create(request, *args, **kwargs)
 
 
 @permission_classes((permissions.AllowAny,))
@@ -114,42 +144,16 @@ class CastUpcomingMovieApi(APIView):
             return Response(serializer.data)
 
 
-class RudCastAPI(GenericAPIView, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin):
-    queryset = Cast.objects.all()
-    serializer_class = CastSerializer
+# class RudCastAPI(GenericAPIView, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin):
+#     queryset = Cast.objects.all()
+#     serializer_class = CastSerializer
+#
+#     def get(self, request, *args, **kwargs):
+#         return self.retrieve(request, *args, **kwargs)
+#
+#     def put(self, request, *args, **kwargs):
+#         return self.update(request, *args, **kwargs)
+#
+#     def delete(self, request, *args, **kwargs):
+#         return self.destroy(request, *args, **kwargs)
 
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
-
-
-# Profile API
-
-class LcProfileAPI(GenericAPIView, ListModelMixin, CreateModelMixin):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
-
-class RudProfileAPI(GenericAPIView, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
